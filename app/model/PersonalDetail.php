@@ -1,7 +1,7 @@
 <?php
 
-namespace App;
-
+namespace App\model;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class PersonalDetail extends Model
@@ -17,4 +17,11 @@ class PersonalDetail extends Model
         'dateOfBirth',
         'gender'
     ]; //
+//
+    public function getAge(){
+        $this->dateOfBirth->diff(Carbon::now())
+            ->format('%y years, %m months and %d days');
+    }
+
+
 }

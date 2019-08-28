@@ -1,7 +1,7 @@
-
 @extends('master')
-@section('content')
 
+@section('content')
+    {{json_encode($jobCat)}}
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -18,7 +18,7 @@
                     <div class="card-body-icon">
                         <i class="fas fa-fw fa-comments"></i>
                     </div>
-                    <div class="mr-5">26 New Messages!</div>
+                    <div class="mr-5">New CV</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
                     <span class="float-left">View Details</span>
@@ -34,7 +34,7 @@
                     <div class="card-body-icon">
                         <i class="fas fa-fw fa-list"></i>
                     </div>
-                    <div class="mr-5">11 New Tasks!</div>
+                    <div class="mr-5">No of downloads</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
                     <span class="float-left">View Details</span>
@@ -50,7 +50,7 @@
                     <div class="card-body-icon">
                         <i class="fas fa-fw fa-shopping-cart"></i>
                     </div>
-                    <div class="mr-5">123 New Orders!</div>
+                    <div class="mr-5">Looking for job</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
                     <span class="float-left">View Details</span>
@@ -79,42 +79,111 @@
     </div>
 
 
-{{--    body for charts visualization--}}
-{{--    <!-- Area Chart Example-->--}}
-{{--    <div class="card mb-3">--}}
-{{--        <div class="card-header">--}}
-{{--            <i class="fas fa-chart-area"></i>--}}
-{{--            Area Chart Example</div>--}}
-{{--        <div class="card-body">--}}
-{{--            <canvas id="myAreaChart" width="100%" height="30"></canvas>--}}
-{{--        </div>--}}
-{{--        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>--}}
-{{--    </div>--}}
-
     <div class="row">
         <div class="col-lg-8">
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-bar"></i>
-                    Age Distribution</div>
+                    Age Distribution
+                </div>
                 <div class="card-body">
                     <canvas id="myBarChart" width="100%" height="50"></canvas>
+                    <?php echo json_encode($Age); ?>
                 </div>
+
+                <script>
+
+                    var chartdata = {
+                        type: 'bar',
+                        data: {
+                            labels: <?php echo json_encode($AgeArray); ?>,
+                            responsive: true,
+
+                            datasets: [
+                                {
+                                    label: 'this year',
+                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    borderWidth: 1,
+                                    data: <?php echo json_encode($AgeData); ?>
+                                }
+                            ],
+                        },
+
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'Age'
+                                    },
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 6
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 100,
+                                        maxTicksLimit: 5
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    };
+                    var ctx = document.getElementById('myBarChart');
+                    new Chart(ctx, chartdata);
+
+                </script>
                 <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
         </div>
 
-    <div class="col-lg-4">
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fas fa-chart-pie"></i>
-                Gender</div>
-            <div class="card-body">
-                <canvas id="myPieChart" width="100%" height="112.5"></canvas>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+                    Gender
+                </div>
+                <div class="card-body">
+                    <canvas id="myPieChart" width="100%" height="112.5"></canvas>
+                    <?php echo json_encode($Months); ?>
+                    <?php echo json_encode($Data); ?>
+                </div>
+
+
+                <script>
+
+                    var chartdata = {
+                        type: 'pie',
+                        data: {
+                            labels: <?php echo json_encode($Months); ?>,
+                            responsive: true,
+
+                            datasets: [
+                                {
+                                    label: 'this year',
+                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    borderWidth: 1,
+                                    data: <?php echo json_encode($Data); ?>
+                                }],
+                        },
+                    };
+                    var ctx = document.getElementById('myPieChart');
+                    new Chart(ctx, chartdata);
+
+                </script>
+                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
-            <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
         </div>
-    </div>
 
     </div>
     <div class="row">
@@ -122,10 +191,65 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-bar"></i>
-                    Age Distribution</div>
+                    Industry Distribution
+                </div>
                 <div class="card-body">
                     <canvas id="myBarChart1" width="100%" height="50"></canvas>
+
+
                 </div>
+
+                <script>
+
+                    var chartdata = {
+                        type: 'bar',
+                        data: {
+                            labels: <?php echo json_encode($jobCat); ?>,
+                            responsive: true,
+
+                            datasets: [
+                                {
+                                    label: 'this year',
+                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    borderWidth: 1,
+                                    data: <?php echo json_encode($jobCatCount); ?>
+                                }
+                            ],
+                        },
+
+                        options: {
+                            scales: {
+                                xAxes: [{
+                                    time: {
+                                        unit: 'Age'
+                                    },
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 6
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                        min: 0,
+                                        max: 10 ,
+                                        maxTicksLimit: 5
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    };
+                    var ctx = document.getElementById('myBarChart1');
+                    new Chart(ctx, chartdata);
+
+                </script>
                 <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
         </div>
@@ -133,7 +257,8 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-pie"></i>
-                    Gender</div>
+                    Interested Candidate
+                </div>
                 <div class="card-body">
                     <canvas id="myPieChart1" width="100%" height="112.5"></canvas>
                 </div>
@@ -141,13 +266,14 @@
             </div>
         </div>
 
-@endsection
+        @endsection
 
-@section('dashboard-footer')
-    <script src="{{URL::to('js/demo/chart-area-demo.js')}}"></script>
-    <script src="{{URL::to('js/demo/chart-bar-demo.js')}}"></script>
-    <script src="{{URL::to('js/demo/chart-pie-demo.js')}}"></script>
-    @endsection
+        @section('dashboard-footer')
+            <script src="{{URL::to('js/demo/chart-area-demo.js')}}"></script>
+            <script src="{{URL::to('js/demo/chart-bar-demo.js')}}"></script>
+            <script src="{{URL::to('js/demo/chart-pie-demo.js')}}"></script>
+
+@endsection
 
 
 
@@ -410,7 +536,6 @@
 {{--        </div>--}}
 {{--    </div>--}}
 {{--</div>--}}
-
 
 
 {{--<!-- Bootstrap core JavaScript-->--}}

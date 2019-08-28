@@ -29,6 +29,21 @@
 //dashboard
 Route::get('/','frontendController@dashboard')->name('dashboard');
 
+
 //table
 Route::get('/tables','frontendController@tables')->name('tables');
+//Route::get('/','frontendController@showTables')->name('tables');
+
+Route::get('/test','frontendController@getAge');
+
+Route::get('/test1','frontendController@getJobCategory');
+
+//for chart.blade.php
+//Route::get('/', 'frontendController@Chartjs')->name('dashboard');
+
+//for get method to load on ajax
+//Route::get('/getGender','frontendController@getGender');
+
+
+//Route::get("/chart", "frontendController@Chartjs")->name('chart');
 

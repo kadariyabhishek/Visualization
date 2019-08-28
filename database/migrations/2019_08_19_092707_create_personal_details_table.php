@@ -23,6 +23,7 @@ class CreatePersonalDetailsTable extends Migration
             $table->string('address');
             $table->string('dateOfBirth');
             $table->string('gender');
+            $table->string('cv_id');
             $table->timestamps();
         });
     }

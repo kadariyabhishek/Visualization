@@ -23,5 +23,9 @@
     <script src="{{URL::to('js/sb-admin.min.js')}}"></script>
     <link href="{{URL::to('css/sb-admin.css')}}" rel="stylesheet" >
 
+{{--for the piechart--}}
+    <script src="http://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
+    <script src="http://www.chartjs.org/samples/latest/utils.js"></script>
+
 
 </head>
