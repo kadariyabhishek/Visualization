@@ -25,8 +25,8 @@ class frontendController extends Controller
     public function dashboard()
     {
         //for gender visualization
-        $all = array(DB::table('personal_details')->whereIn('gender', ['Male'])->count(), DB::table('personal_details')->whereIn('gender', ['Female'])->count());
-        $month = array('Male', 'Female');
+        $genderCount = array(DB::table('personal_details')->whereIn('gender', ['Male'])->count(), DB::table('personal_details')->whereIn('gender', ['Female'])->count());
+        $gender = array('Male', 'Female');
 
 
 
@@ -36,25 +36,36 @@ class frontendController extends Controller
         foreach ($gg as $date) {
             $temp[] = Carbon::parse($date)->age;
         }
-        $ageCount = array('18-24' => 0, '25-35' => 0, '36-45' => 0, '46+' => 0);//initializing the array of age-group
-        if(!empty($temp)) {
+
+        $ageCount = array('18-22' => 0, '23-27' => 0, '28-31' => 0,'32-36'=>0,'37-41'=>0,'42-46'=>0, '47+' => 0);//initializing the array of age-group
+
             foreach ($temp as $val) {
-                if ($val >= 18 && $val <= 24) {
-                    $ageCount['18-24'] = $ageCount['18-24'] + 1;
-                } elseif ($val >= 25 && $val <= 35) {
-                    $ageCount['25-35'] = $ageCount['25-35'] + 1;
-                } elseif ($val >= 36 && $val <= 45) {
-                    $ageCount['36-45'] = $ageCount['36-45'] + 1;
-                } elseif ($val >= 46) {
-                    $ageCount['46+'] = $ageCount['46+'] + 1;
-                }
+
+                    if ($val >= 18 && $val <= 22) {
+                        $ageCount['18-22'] = $ageCount['18-22'] + 1;
+                    } elseif ($val >= 23 && $val <= 27) {
+                        $ageCount['23-27'] = $ageCount['23-27'] + 1;
+                    } elseif ($val >= 28 && $val <= 31) {
+                        $ageCount['28-31'] = $ageCount['28-31'] + 1;
+                    } elseif ($val >= 32 && $val <= 36) {
+                        $ageCount['32-36'] = $ageCount['32-36'] + 1;
+                    } elseif ($val >= 37 && $val <= 41) {
+                        $ageCount['37-41'] = $ageCount['37-41'] + 1;
+                    } elseif ($val >= 42 && $val <= 46) {
+                        $ageCount['42-46'] = $ageCount['42-46'] + 1;
+                    } elseif ($val >= 47) {
+                        $ageCount['47+'] = $ageCount['47+'] + 1;
+                    }
+
             }
-        }
+
         $ageCountArray=array();
         $ageCountData= array();
         foreach ($ageCount as $key => $value) {
-            array_push($ageCountArray, $key);
-            array_push($ageCountData, $value);
+            if (!empty($value)) {
+                array_push($ageCountArray, $key);
+                array_push($ageCountData, $value);
+            }
         }
 
 
@@ -83,11 +94,21 @@ class frontendController extends Controller
             array_push($jobCatData, $key);
             array_push($jobCatCount, $value);
         }
+        //for calculating percentage to display in the label
+        $total= array_sum($jobCatCount);
+        $percentageArray= array();
+        foreach ($jobCatCount as $key => $value) {
+            $percentage= $value/$total*100;
+            array_push($percentageArray,$percentage);
+        }
 
 
 
-        return view('pages.dashboard', ['Months' => $month, 'Data' => $all, 'Age' => $temp, 'IndustryCount' => $count,
-            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData]);
+
+
+
+        return view('pages.dashboard', ['Gender' => $gender, 'GenderCount' => $genderCount  , 'Age' => $temp, 'IndustryCount' => $count,
+            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData]);
 //        return view('pages.dashboard')->with('Months'=>$month, 'Data'=>$all);
     }
 
@@ -102,27 +123,35 @@ class frontendController extends Controller
         foreach ($gg as $date) {
             $temp[] = Carbon::parse($date)->age;
         }
-        $ageCount = array('18-24' => 0, '25-35' => 0, '36-45' => 0, '46+' => 0);//initializing the array of age-group
-        if(!empty($temp)) {
+        $ageCount = array('18-22' => 0, '23-27' => 0, '28-31' => 0,'32-36'=>0,'37-41'=>0,'42-46'=>0, '47+' => 0);//initializing the array of age-group
+
             foreach ($temp as $val) {
-                if ($val >= 18 && $val <= 24) {
-                    $ageCount['18-24'] = $ageCount['18-24'] + 1;
-                } elseif ($val >= 25 && $val <= 35) {
-                    $ageCount['25-35'] = $ageCount['25-35'] + 1;
-                } elseif ($val >= 36 && $val <= 45) {
-                    $ageCount['36-45'] = $ageCount['36-45'] + 1;
-                } elseif ($val >= 46) {
-                    $ageCount['46+'] = $ageCount['46+'] + 1;
+                if ($val >= 18 && $val <= 22) {
+                    $ageCount['18-22'] = $ageCount['18-22'] + 1;
+                } elseif ($val >= 23 && $val <= 27) {
+                    $ageCount['23-27'] = $ageCount['23-27'] + 1;
+                } elseif ($val >= 28 && $val <= 31) {
+                    $ageCount['28-31'] = $ageCount['28-31'] + 1;
+                } elseif ($val >= 32 && $val <= 36) {
+                    $ageCount['32-36'] = $ageCount['32-36'] + 1;
+                } elseif ($val >= 37 && $val <= 41) {
+                    $ageCount['37-41'] = $ageCount['37-41'] + 1;
+                } elseif ($val >= 42 && $val <= 46) {
+                    $ageCount['42-46'] = $ageCount['42-46'] + 1;
+                } elseif ($val >= 47) {
+                    $ageCount['47+'] = $ageCount['47+'] + 1;
                 }
             }
-        }
+
         $ageCountArray=array();
         $ageCountData= array();
-        foreach ($ageCount as $key => $value) {
-            array_push($ageCountArray, $key);
-            array_push($ageCountData, $value);
-        }
 
+            foreach ($ageCount as $key => $value) {
+                if(!empty($value)) {
+                array_push($ageCountArray, $key);
+                array_push($ageCountData, $value);
+            }
+        }
 
         print_r($ageCountArray);
         print_r($ageCountData);
@@ -132,8 +161,7 @@ class frontendController extends Controller
 
 
     //for Industry Visualization {{users working }}
-    public
-    function getJobCategory()
+    public function getJobCategory()
     {
 
         $count = DB::table('personal_profiles')
@@ -144,31 +172,43 @@ class frontendController extends Controller
 
         if (!empty($count)) {
             foreach ($count as $count_no) {
-
                 $jobCat = $count_no->jobCategory;
                 $jobCount = $count_no->count;
                 $jobIndustry[$jobCat] = $jobCount;
             }
+
         }
+
+
+
 
         $jobCatData = array();
         $jobCatCount = array();
+        //to put the values of JobCategory and JobCategoryCount in Array
         foreach ($jobIndustry as $key => $value) {
             array_push($jobCatData, $key);
             array_push($jobCatCount, $value);
         }
-        print_r($jobCatData);
         print_r($jobCatCount);
+        //for calculating percentage to display in the label
+        $total= array_sum($jobCatCount);
+        $percentageArray=array();
+        foreach ($jobCatCount as $key => $value) {
+           $percentage= $value/$total*100;
+           array_push($percentageArray,$percentage);
+
+        }
+
+//        $number= count();
+
+        echo $total;
+
+ }
 
 
-//        $count = DB::table('personal_details')->where('gender', '=', '$genders->title')->count();
-//        echo'<pre>';
-//        print_r($count);
-//        echo'</pre>';
-//        dd($count);
 
 
-    }
+//    }
 
 
 //    public function getGender(){
@@ -186,8 +226,7 @@ class frontendController extends Controller
 //
 //    }
 //for the gender visualization used in the index
-    public
-    function Chartjs()
+    public function Chartjs()
     {
 
         $all = array(DB::table('personal_details')->whereIn('gender', ['Male'])->count(), DB::table('personal_details')->whereIn('gender', ['Female'])->count());
