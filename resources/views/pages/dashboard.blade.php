@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
-    {{json_encode($jobCat)}}
+
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -89,7 +89,8 @@
                 </div>
                 <div class="card-body">
                     <canvas id="myBarChart" width="100%" height="50"></canvas>
-                    <?php echo json_encode($Age); ?>
+
+<!--                    --><?php //echo json_encode($Age); ?>
                 </div>
 
                 <script>
@@ -103,7 +104,7 @@
                             datasets: [
                                 {
                                     label: 'total',
-                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    backgroundColor: ['#007bff', '#dc3545','#25DC93','#1FDC66','#6A933E','#DCD673','#DCD804'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($AgeData); ?>
                                 }
@@ -111,6 +112,19 @@
                         },
 
                         options: {
+                                tooltips: {
+                                    callbacks: {
+                                        label: function(tooltipItem, data) {
+                                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                                            var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                                return previousValue + currentValue;
+                                            });
+                                            var currentValue = dataset.data[tooltipItem.index];
+                                            var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+                                            return precentage + "%";
+                                        }
+                                    }
+                                },
                             scales: {
                                 xAxes: [{
                                     time: {
@@ -175,6 +189,22 @@
                                     data: <?php echo json_encode($GenderCount); ?>
                                 }],
                         },
+                        options: {
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                                        var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        var currentValue = dataset.data[tooltipItem.index];
+                                        var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                        return precentage + "%";
+                                    }
+                                }
+                            }
+                        }
+
                     };
                     var ctx = document.getElementById('myPieChart');
                     new Chart(ctx, chartdata);
@@ -194,9 +224,6 @@
                 </div>
                 <div class="card-body">
                     <canvas id="myBarChart1" width="100%" height="50"></canvas>
-                    <?php echo json_encode($percentage)?>
-                    <?php echo json_encode($jobCatCount)?>
-
                 </div>
 
                 <script>
@@ -220,7 +247,23 @@
                             ],
                         },
 
+
+
+
                         options: {
+                            tooltips: {
+                                callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        var currentValue = dataset.data[tooltipItem.index];
+                                        var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+                                        return precentage + "%";
+                                    }
+                                }
+                            },
                             scales: {
                                 xAxes: [{
                                     time: {
@@ -248,6 +291,7 @@
                                 display: false
                             }
                         }
+
                     };
                     var ctx = document.getElementById('myBarChart1');
                     new Chart(ctx, chartdata);
@@ -265,6 +309,42 @@
                 <div class="card-body">
                     <canvas id="myPieChart1" width="100%" height="112.5"></canvas>
                 </div>
+                <script>
+                    var chartdata={
+                      type: 'doughnut',
+                      data: {
+                        // labels: ["Blue", "Red", "Yellow", "Green","white","black"],
+                          labels: ['Interested','Not-Interested'],
+
+
+                        responsive: true,
+                        datasets:[{
+                          // data: [12.21, 15.58, 11.25, 8.32,4.5,7.8],
+                          data: [12.21, 15.58],
+                          backgroundColor: ['#2BDC8C', '#DC2CD2'],
+                        }],
+                      },
+                        // options: {
+                        //     tooltips: {
+                        //         callbacks: {
+                        //             label: function (tooltipItem, data) {
+                        //                 var dataset = data.datasets[tooltipItem.datasetIndex];
+                        //                 var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                        //                     return previousValue + currentValue;
+                        //                 });
+                        //                 var currentValue = dataset.data[tooltipItem.index];
+                        //                 var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                        //                 return precentage + "%";
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                     }
+                    var ctx = document.getElementById("myPieChart1");
+                    new Chart(ctx, chartdata);
+                    </script>
+
+
                 <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
         </div>
