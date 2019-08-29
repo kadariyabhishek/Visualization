@@ -34,13 +34,14 @@
                     <div class="card-body-icon">
                         <i class="fas fa-fw fa-list"></i>
                     </div>
-                    <div class="mr-5">No of downloads</div>
+                    <div class="mr-5">No of downloads </div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="#">
                     <span class="float-left">View Details</span>
                     <span class="float-right">
                   <i class="fas fa-angle-right"></i>
                 </span>
+                 asdf
                 </a>
             </div>
         </div>
@@ -101,7 +102,7 @@
 
                             datasets: [
                                 {
-                                    label: 'this year',
+                                    label: 'total',
                                     backgroundColor: ['#007bff', '#dc3545'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($AgeData); ?>
@@ -125,7 +126,7 @@
                                 yAxes: [{
                                     ticks: {
                                         min: 0,
-                                        max: 100,
+                                        max: 10,
                                         maxTicksLimit: 5
                                     },
                                     gridLines: {
@@ -155,8 +156,6 @@
                 </div>
                 <div class="card-body">
                     <canvas id="myPieChart" width="100%" height="112.5"></canvas>
-                    <?php echo json_encode($Months); ?>
-                    <?php echo json_encode($Data); ?>
                 </div>
 
 
@@ -165,15 +164,15 @@
                     var chartdata = {
                         type: 'pie',
                         data: {
-                            labels: <?php echo json_encode($Months); ?>,
+                            labels: <?php echo json_encode($Gender); ?>,
                             responsive: true,
 
                             datasets: [
                                 {
-                                    label: 'this year',
+                                    label: 'Total',
                                     backgroundColor: ['#007bff', '#dc3545'],
                                     borderWidth: 1,
-                                    data: <?php echo json_encode($Data); ?>
+                                    data: <?php echo json_encode($GenderCount); ?>
                                 }],
                         },
                     };
@@ -195,7 +194,8 @@
                 </div>
                 <div class="card-body">
                     <canvas id="myBarChart1" width="100%" height="50"></canvas>
-
+                    <?php echo json_encode($percentage)?>
+                    <?php echo json_encode($jobCatCount)?>
 
                 </div>
 
@@ -205,14 +205,17 @@
                         type: 'bar',
                         data: {
                             labels: <?php echo json_encode($jobCat); ?>,
+
                             responsive: true,
 
                             datasets: [
                                 {
-                                    label: 'this year',
-                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    label: <?php echo json_encode($jobCat); ?>,
+                                    backgroundColor: ['#007bff', '#dc3545','#20fc03','#465259','#9e6816'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($jobCatCount); ?>
+
+
                                 }
                             ],
                         },
