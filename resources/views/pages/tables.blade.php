@@ -51,7 +51,7 @@
                             <td>{{$Age[$da]}}</td>
                             <td><b>{{$data->jobTitle}}</b>
                             {{$data->jobSummary}}</td>
-                            <td></td>
+                            <td> {{$data->expectedSalary}}</td>
                             <td></td>
                         </tr>
                     @endforeach

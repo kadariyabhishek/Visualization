@@ -67,6 +67,8 @@ class frontendController extends Controller
                 array_push($ageCountData, $value);
             }
         }
+        //max no for the x-axis in visualization
+        $maxNo= max($ageCountData);
 
 
 //        print_r($ageCountArray);
@@ -108,7 +110,7 @@ class frontendController extends Controller
 
 
         return view('pages.dashboard', ['Gender' => $gender, 'GenderCount' => $genderCount  , 'Age' => $temp, 'IndustryCount' => $count,
-            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData]);
+            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData,'MaxCount'=>$maxNo]);
 //        return view('pages.dashboard')->with('Months'=>$month, 'Data'=>$all);
     }
 
@@ -152,6 +154,8 @@ class frontendController extends Controller
                 array_push($ageCountData, $value);
             }
         }
+            $maxNo= max($ageCountData);
+            print_r($maxNo);
 
         print_r($ageCountArray);
         print_r($ageCountData);
@@ -241,16 +245,21 @@ class frontendController extends Controller
         $datas['item'] = DB::table('personal_profiles')
             ->join('personal_details', 'personal_details.cv_id', '=', 'personal_profiles.cv_id')
             ->join('experiences', 'experiences.cv_id', '=', 'personal_details.cv_id')
-            ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email', 'personal_profiles.lookingFor', 'experiences.jobTitle',
+            ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email', 'personal_profiles.lookingFor',
+                'personal_profiles.expectedSalary','experiences.jobTitle',
                 'experiences.current', 'personal_details.gender', 'experiences.jobTitle', 'experiences.jobSummary')
             //->where('experiences.cv_id','=','personal_profiles.cv_id')
+
             ->get();
+
+//        if()
+
+
         //for the age calculation
         $test['item'] = DB::table('personal_details')->pluck('dateOfBirth');
         $gg = $test['item'];
         foreach ($gg as $date) {
             $temp[] = Carbon::parse($date)->age;
-//            array_push($dateOfBirthArray, $temp);
         }
         return view('pages.tables', $datas, ['Age' => $temp]);
 

@@ -80,8 +80,8 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-lg-8">
+{{--    <div class="row">--}}
+{{--        <div class="col-lg-8">--}}
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-bar"></i>
@@ -90,7 +90,7 @@
                 <div class="card-body">
                     <canvas id="myBarChart" width="100%" height="50"></canvas>
 
-<!--                    --><?php //echo json_encode($Age); ?>
+
                 </div>
 
                 <script>
@@ -98,12 +98,13 @@
                     var chartdata = {
                         type: 'bar',
                         data: {
-                            labels: <?php echo json_encode($AgeArray); ?>,
+                            labels:<?php echo json_encode($AgeArray); ?>,
                             responsive: true,
 
                             datasets: [
                                 {
-                                    label: 'total',
+                                    // label: 'Range',
+                                    label:<?php echo json_encode($AgeArray); ?> ,
                                     backgroundColor: ['#007bff', '#dc3545','#25DC93','#1FDC66','#6A933E','#DCD673','#DCD804'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($AgeData); ?>
@@ -134,14 +135,14 @@
                                         display: false
                                     },
                                     ticks: {
-                                        maxTicksLimit: 6
+                                        maxTicksLimit: 100
                                     }
                                 }],
                                 yAxes: [{
                                     ticks: {
                                         min: 0,
-                                        max: 10,
-                                        maxTicksLimit: 5
+                                        max: <?php echo json_encode($MaxCount)?>,
+                                        maxTicksLimit: 100
                                     },
                                     gridLines: {
                                         display: true
@@ -159,9 +160,103 @@
                 </script>
                 <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
-        </div>
 
 
+{{--        </div>--}}
+{{--    </div>--}}
+
+
+
+
+
+{{--    <div class="row">--}}
+{{--        <div class="col-lg-8">--}}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar"></i>
+                    Industry Distribution
+                </div>
+                <div class="card-body">
+                    <canvas id="myBarChart1" width="100%" height="50"></canvas>
+
+
+                </div>
+
+                <script>
+
+                    var chartdata = {
+                        type: 'horizontalBar',
+                        data: {
+                            labels: <?php echo json_encode($jobCat);?>,
+
+                            responsive: false,
+
+                            datasets: [
+                                {
+                                    label: 'Total Candidate',
+
+                                    backgroundColor: ['#007bff', '#dc3545','#20fc03','#465259','#9e6816','#4e6e49','#0a2606','#0a2606','#20fc03'],
+                                    borderWidth: 3  ,
+                                    data: <?php echo json_encode($jobCatCount); ?>
+
+
+                                }
+                            ],
+                        },
+                        options: {
+                            // tooltips: {
+                            //     callbacks: {
+                            //         label: function(tooltipItem, data) {
+                            //             var dataset = data.datasets[tooltipItem.datasetIndex];
+                            //             var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                            //                 return previousValue + currentValue;
+                            //             });
+                            //             var currentValue = dataset.data[tooltipItem.index];
+                            //             var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+                            //             return precentage + "%";
+                            //         }
+                            //     }
+                            // },
+                            scales: {
+                                xAxes: [{
+                                    stacked: true,
+                                    time: {
+                                        unit: 'Age'
+                                    },
+                                    gridLines: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        maxTicksLimit: 5
+                                    }
+                                }],
+                                yAxes: [{
+                                    // stacked: true,
+                                    ticks: {
+                                        min: 0,
+                                        max: 10 ,
+                                        maxTicksLimit: 50
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                }],
+                            },
+                            legend: {
+                                display:false
+                            }
+                        }
+
+                    };
+                    var ctx = document.getElementById('myBarChart1');
+                    new Chart(ctx, chartdata);
+
+                </script>
+
+            </div>
+
+
+    <div class="row">
         <div class="col-lg-4">
             <div class="card mb-3">
                 <div class="card-header">
@@ -210,94 +305,6 @@
                     new Chart(ctx, chartdata);
 
                 </script>
-                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar"></i>
-                    Industry Distribution
-                </div>
-                <div class="card-body">
-                    <canvas id="myBarChart1" width="100%" height="50"></canvas>
-                </div>
-
-                <script>
-
-                    var chartdata = {
-                        type: 'bar',
-                        data: {
-                            labels: <?php echo json_encode($jobCat); ?>,
-
-                            responsive: true,
-
-                            datasets: [
-                                {
-                                    label: <?php echo json_encode($jobCat); ?>,
-                                    backgroundColor: ['#007bff', '#dc3545','#20fc03','#465259','#9e6816'],
-                                    borderWidth: 1,
-                                    data: <?php echo json_encode($jobCatCount); ?>
-
-
-                                }
-                            ],
-                        },
-
-
-
-
-                        options: {
-                            tooltips: {
-                                callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        var dataset = data.datasets[tooltipItem.datasetIndex];
-                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                            return previousValue + currentValue;
-                                        });
-                                        var currentValue = dataset.data[tooltipItem.index];
-                                        var precentage = Math.floor(((currentValue/total) * 100)+0.5);
-                                        return precentage + "%";
-                                    }
-                                }
-                            },
-                            scales: {
-                                xAxes: [{
-                                    time: {
-                                        unit: 'Age'
-                                    },
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    ticks: {
-                                        maxTicksLimit: 6
-                                    }
-                                }],
-                                yAxes: [{
-                                    ticks: {
-                                        min: 0,
-                                        max: 10 ,
-                                        maxTicksLimit: 5
-                                    },
-                                    gridLines: {
-                                        display: true
-                                    }
-                                }],
-                            },
-                            legend: {
-                                display: false
-                            }
-                        }
-
-                    };
-                    var ctx = document.getElementById('myBarChart1');
-                    new Chart(ctx, chartdata);
-
-                </script>
-                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
         </div>
         <div class="col-lg-4">
@@ -343,11 +350,65 @@
                     var ctx = document.getElementById("myPieChart1");
                     new Chart(ctx, chartdata);
                     </script>
-
-
-                <!-- <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div> -->
             </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+                    Looking For
+                </div>
+                <div class="card-body">
+                    <canvas id="myPieChart" width="100%" height="112.5"></canvas>
+                </div>
+
+
+                <script>
+
+                    var chartdata = {
+                        type: 'pie',
+                        data: {
+                            labels: <?php echo json_encode($Gender); ?>,
+                            responsive: true,
+
+                            datasets: [
+                                {
+                                    label: 'Total',
+                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    borderWidth: 1,
+                                    data: <?php echo json_encode($GenderCount); ?>
+                                }],
+                        },
+                        options: {
+                            tooltips: {
+                                callbacks: {
+                                    label: function (tooltipItem, data) {
+                                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                                        var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        var currentValue = dataset.data[tooltipItem.index];
+                                        var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                        return precentage + "%";
+                                    }
+                                }
+                            }
+                        }
+
+                    };
+                    var ctx = document.getElementById('myPieChart');
+                    new Chart(ctx, chartdata);
+
+                </script>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
 
         @endsection
 
