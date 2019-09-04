@@ -49,8 +49,7 @@
                             <td>{{$data->lookingFor}}</td>
                             <td>{{$data->current}}</td>
                             <td>{{$Age[$da]}}</td>
-                            <td><b>{{$data->jobTitle}}</b>
-                            {{$data->jobSummary}}</td>
+                            <td>{{$data->jobTitle}}</td>
                             <td> {{$data->expectedSalary}}</td>
                             <td></td>
                         </tr>

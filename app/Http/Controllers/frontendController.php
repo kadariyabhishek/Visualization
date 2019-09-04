@@ -71,10 +71,8 @@ class frontendController extends Controller
         $maxNo= max($ageCountData);
 
 
-//        print_r($ageCountArray);
-//        print_r($ageCountData);
+        //for industry data visualization
 
-        //for industry visualization
         $count = DB::table('personal_profiles')
             ->select('jobCategory', DB::raw('COUNT(*) as count'))
             ->groupBy('jobCategory')
@@ -104,13 +102,24 @@ class frontendController extends Controller
             array_push($percentageArray,$percentage);
         }
 
+        //to visualize the candidates who are looking for job
 
+        $interestedCandidateCount = array(DB::table('looking_fors')->whereIn('choice', ['Interested'])->count(), DB::table('looking_fors')->whereIn('choice', ['Not Interested'])->count());
+        $LookingFor= array('Interested', 'Not Interested');
+
+
+        //to visualize level of JOB looking for
+
+        $jobLevelCount= array(DB::table('personal_profiles')->whereIn('LookingFor',['Senior Level'])->count(),DB::table('personal_profiles')->whereIn('LookingFor',['Mid Level'])->count(),
+            DB::table('personal_profiles')->whereIn('lookingFor',['Entry Level'])->count());
+        $jobLevel=array('Senior Level','Mid Level','Entry level');
 
 
 
 
         return view('pages.dashboard', ['Gender' => $gender, 'GenderCount' => $genderCount  , 'Age' => $temp, 'IndustryCount' => $count,
-            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData,'MaxCount'=>$maxNo]);
+            'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData,'MaxCount'=>$maxNo,
+            'InterestedCandidateCount'=>$interestedCandidateCount,'LookingFor'=>$LookingFor,'JobLevelCount'=>$jobLevelCount,'JobLevel'=>$jobLevel]);
 //        return view('pages.dashboard')->with('Months'=>$month, 'Data'=>$all);
     }
 
@@ -255,17 +264,60 @@ class frontendController extends Controller
 //        if()
 
 
-        //for the age calculation
+       // for the age calculation
         $test['item'] = DB::table('personal_details')->pluck('dateOfBirth');
         $gg = $test['item'];
         foreach ($gg as $date) {
             $temp[] = Carbon::parse($date)->age;
         }
+
+
+        //for the calculation of the experience
+
+//        $dt = Carbon::now();
+//        echo $dt->diffInYears($dt->copy()->addYear());
+//            if($finish='Current'){
+//
+//                $end = DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current');
+//                $now = Carbon::now();
+//                print_r($end);
+//
+//            }
+//        $from = Carbon::createFromFormat('Y-m-d H:s:i', '2016-5-6 9:30:34');
+//        dd($from);
+//       $finish=DB::table('experiences')->pluck('endTime');
+//        $diff_in_days = $start->diffInDays($from);
+//        print_r($diff_in_days);
+
+
+
+
+
         return view('pages.tables', $datas, ['Age' => $temp]);
 
-        /** @var TYPE_NAME $dateOfBirth */
+    }
 
+    public function getExperience(){
+        $dt = Carbon::now();
+//        $end = array(DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current'));
+        $start=Experience::all();
+        $end = DB::table('experiences')->whereNotIn('endTime',['Current'])->get();
+        foreach ($end as $value){
+            $endTime[]=$value->endTime;
+        }
+        return $endTime;
 
+//        $collection= collect($end);
+//        $filtered= $collection->except('endTime','Current');
+//
+//        dd($filtered);
+
+//        $collection = collect()
+//        echo $dt->toDateString();
+//        echo $dt->toFormattedDateString();
+//        echo $dt->toTimeString();
+//        echo $dt->toDateTimeString();           //
+//        echo $dt->toDayDateTimeString();
     }
 
 

@@ -139,10 +139,11 @@
                                     }
                                 }],
                                 yAxes: [{
+                                    stacked: true,
                                     ticks: {
                                         min: 0,
                                         max: <?php echo json_encode($MaxCount)?>,
-                                        maxTicksLimit: 100
+                                        maxTicksLimit: 5
                                     },
                                     gridLines: {
                                         display: true
@@ -189,7 +190,7 @@
                         data: {
                             labels: <?php echo json_encode($jobCat);?>,
 
-                            responsive: false,
+                            responsive: true,
 
                             datasets: [
                                 {
@@ -311,7 +312,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <i class="fas fa-chart-pie"></i>
-                    Interested Candidate
+                    Level of Job
                 </div>
                 <div class="card-body">
                     <canvas id="myPieChart1" width="100%" height="112.5"></canvas>
@@ -321,65 +322,16 @@
                       type: 'doughnut',
                       data: {
                         // labels: ["Blue", "Red", "Yellow", "Green","white","black"],
-                          labels: ['Interested','Not-Interested'],
+                          labels: <?php echo json_encode($JobLevel)?>,
 
 
                         responsive: true,
                         datasets:[{
                           // data: [12.21, 15.58, 11.25, 8.32,4.5,7.8],
-                          data: [12.21, 15.58],
+                          data: <?php echo json_encode($JobLevelCount)?>,
                           backgroundColor: ['#2BDC8C', '#DC2CD2'],
                         }],
                       },
-                        // options: {
-                        //     tooltips: {
-                        //         callbacks: {
-                        //             label: function (tooltipItem, data) {
-                        //                 var dataset = data.datasets[tooltipItem.datasetIndex];
-                        //                 var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
-                        //                     return previousValue + currentValue;
-                        //                 });
-                        //                 var currentValue = dataset.data[tooltipItem.index];
-                        //                 var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
-                        //                 return precentage + "%";
-                        //             }
-                        //         }
-                        //     }
-                        // }
-                     }
-                    var ctx = document.getElementById("myPieChart1");
-                    new Chart(ctx, chartdata);
-                    </script>
-            </div>
-        </div>
-
-        <div class="col-lg-4">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <i class="fas fa-chart-pie"></i>
-                    Looking For
-                </div>
-                <div class="card-body">
-                    <canvas id="myPieChart" width="100%" height="112.5"></canvas>
-                </div>
-
-
-                <script>
-
-                    var chartdata = {
-                        type: 'pie',
-                        data: {
-                            labels: <?php echo json_encode($Gender); ?>,
-                            responsive: true,
-
-                            datasets: [
-                                {
-                                    label: 'Total',
-                                    backgroundColor: ['#007bff', '#dc3545'],
-                                    borderWidth: 1,
-                                    data: <?php echo json_encode($GenderCount); ?>
-                                }],
-                        },
                         options: {
                             tooltips: {
                                 callbacks: {
@@ -395,9 +347,58 @@
                                 }
                             }
                         }
+                     }
+                    var ctx = document.getElementById("myPieChart1");
+                    new Chart(ctx, chartdata);
+                    </script>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fas fa-chart-pie"></i>
+               Interested in Job
+                </div>
+                <div class="card-body">
+                    <canvas id="myPieChart2" width="100%" height="112.5"></canvas>
+                </div>
+
+
+                <script>
+
+                    var chartdata = {
+                        type: 'doughnut',
+                        data: {
+                            labels: <?php echo json_encode($LookingFor); ?>,
+                            responsive: true,
+
+                            datasets: [
+                                {
+                                    label: 'Total',
+                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    borderWidth: 1,
+                                    data: <?php echo json_encode($InterestedCandidateCount); ?>
+                                }],
+                        },
+                        options: {
+                            tooltips: {
+                                // callbacks: {
+                                //     label: function (tooltipItem, data) {
+                                //         var dataset = data.datasets[tooltipItem.datasetIndex];
+                                //         var total = dataset.data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                //             return previousValue + currentValue;
+                                //         });
+                                //         var currentValue = dataset.data[tooltipItem.index];
+                                //         var precentage = Math.floor(((currentValue / total) * 100) + 0.5);
+                                //         return precentage + "%";
+                                //     }
+                                // }
+                            }
+                        }
 
                     };
-                    var ctx = document.getElementById('myPieChart');
+                    var ctx = document.getElementById('myPieChart2');
                     new Chart(ctx, chartdata);
 
                 </script>
