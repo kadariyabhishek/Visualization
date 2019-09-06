@@ -36,9 +36,13 @@ Route::get('/tables','frontendController@tables')->name('tables');
 
 Route::get('/test','frontendController@getAge');
 
-Route::get('/test1','frontendController@getJobCategory');
+//Route::get('/test1','frontendController@getJobCategory');
 
 Route::get('/experience','frontendController@getExperience');
+
+
+Route::get('/test1/{id}','frontendController@getTitle')->name('test');
+
 
 //for chart.blade.php
 //Route::get('/', 'frontendController@Chartjs')->name('dashboard');

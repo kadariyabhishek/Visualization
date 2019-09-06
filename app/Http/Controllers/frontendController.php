@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Experience;
+use App\model\Experience;
 use App\Model\AcademicQualification;
 use App\Model\PersonalDetail;
 use App\model\PersonalProfile;
@@ -251,17 +251,42 @@ class frontendController extends Controller
     public
     function tables()
     {
-        $datas['item'] = DB::table('personal_profiles')
-            ->join('personal_details', 'personal_details.cv_id', '=', 'personal_profiles.cv_id')
-            ->join('experiences', 'experiences.cv_id', '=', 'personal_details.cv_id')
+        $datas['item'] = DB::table('personal_details')
+            ->join('personal_profiles', 'personal_profiles.cv_id', '=', 'personal_details.id')
             ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email', 'personal_profiles.lookingFor',
-                'personal_profiles.expectedSalary','experiences.jobTitle',
-                'experiences.current', 'personal_details.gender', 'experiences.jobTitle', 'experiences.jobSummary')
-            //->where('experiences.cv_id','=','personal_profiles.cv_id')
-
+                'personal_profiles.expectedSalary', 'personal_details.gender','personal_profiles.cv_id')
             ->get();
 
-//        if()
+
+
+
+
+
+
+//        $tile1= Experience::all();
+
+
+//        $questions=DB::table('experiences')
+//             ->join('experiences', 'experiences.id', '=', 'personal_profiles.cv_id')
+//            ->select(DB::raw('experiences.cv_id'),'experiences.jobTitle')
+//            ->groupBy('experiences.cv_id')
+//            ->get();
+//
+//        dd($questions);
+
+
+
+//        $datas['item'] = DB::table('personal_profiles')
+//            ->join('personal_details', 'personal_details.id', '=', 'personal_profiles.cv_id')
+//            ->join('experiences', 'experiences.cv_id', '=', 'personal_details.id')
+//            ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email', 'personal_profiles.lookingFor',
+//                'personal_profiles.expectedSalary','experiences.jobTitle',
+//                'experiences.current', 'personal_details.gender', 'experiences.jobTitle', 'experiences.jobSummary')
+//            //->where('experiences.cv_id','=','personal_profiles.cv_id')
+//
+//            ->get();
+
+
 
 
        // for the age calculation
@@ -271,53 +296,60 @@ class frontendController extends Controller
             $temp[] = Carbon::parse($date)->age;
         }
 
-
-        //for the calculation of the experience
-
-//        $dt = Carbon::now();
-//        echo $dt->diffInYears($dt->copy()->addYear());
-//            if($finish='Current'){
-//
-//                $end = DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current');
-//                $now = Carbon::now();
-//                print_r($end);
-//
-//            }
-//        $from = Carbon::createFromFormat('Y-m-d H:s:i', '2016-5-6 9:30:34');
-//        dd($from);
-//       $finish=DB::table('experiences')->pluck('endTime');
-//        $diff_in_days = $start->diffInDays($from);
-//        print_r($diff_in_days);
-
-
-
-
-
         return view('pages.tables', $datas, ['Age' => $temp]);
 
     }
 
-    public function getExperience(){
-        $dt = Carbon::now();
-//        $end = array(DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current'));
-        $start=Experience::all();
-        $end = DB::table('experiences')->whereNotIn('endTime',['Current'])->get();
-        foreach ($end as $value){
-            $endTime[]=$value->endTime;
-        }
-        return $endTime;
-
-//        $collection= collect($end);
-//        $filtered= $collection->except('endTime','Current');
+    public function getExperience($cv_id1){
+//        $dt = Carbon::now();
+////        $end = array(DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current'));
+//        $start=Experience::all();
+//        $end = DB::table('experiences')->whereNotIn('endTime',['Current'])->get();
+//        foreach ($end as $value){
+//            $endTime[]=$value->endTime;
+//        }
+//        return $endTime;
+//        $getExp= Experience::where('cv_id',$cv_id1)
+//        ->get();
+//        return view('tables')->with('getExp',$getExp);
 //
-//        dd($filtered);
 
-//        $collection = collect()
-//        echo $dt->toDateString();
-//        echo $dt->toFormattedDateString();
-//        echo $dt->toTimeString();
-//        echo $dt->toDateTimeString();           //
-//        echo $dt->toDayDateTimeString();
+    }
+
+
+
+    public function getTitle($id)
+    {
+        $track_id= $id;
+//        return $track_id;
+        //Create an array
+        $groups = [];
+
+        $item=Experience::where('cv_id',$track_id)->get();
+
+
+//        //Retrieve the list of experiences_cv_id's in use.
+//        $cats = DB::table('experiences')->distinct()->select('cv_id')->get();
+//
+//        //for each cat_id in use, find the products associated and then add a collection of those products to the relevant array element
+//        foreach($cats as $cat){
+//             $groups[$cat->cv_id] = DB::table('experiences')->where('cv_id', $cat->cv_id)->get();
+//        }
+////        dd($groups);
+
+        return view('test',['item'=>$item]);
+//        return view('test',$groups);
+
+//
+//        $myId= Experience::all();
+//        foreach($myId as $value){
+//            $ID[]=$value->cv_id;
+////            if($ID)
+//
+//        };
+
+//        return view('test',$questions);
+
     }
 
 

@@ -16,27 +16,14 @@
                         <th>S.N</th>
                         <th>Name</th>
                         <th>Job Category</th>
-                        <th>Current Office</th>
                         <th>Age</th>
-                        <th>Experience</th>
                         <th>Expected Salary</th>
-                        {{--                                job location--}}
                         <th>Location</th>
+{{--                        <th>Current Office</th>--}}
+                        <th>Experience</th>
                     </tr>
                     </thead>
-{{--                    <tfoot>--}}
-{{--                    <tr>--}}
-{{--                        <th>S.N</th>--}}
-{{--                        <th>Name</th>--}}
-{{--                        <th>Job Category</th>--}}
-{{--                        <th>Current Office</th>--}}
-{{--                        <th>Age</th>--}}
-{{--                        <th>Experience</th>--}}
-{{--                        <th>Expected Salary</th>--}}
-{{--                        --}}{{--                                job location--}}
-{{--                        <th>Location</th>--}}
-{{--                    </tr>--}}
-{{--                    </tfoot>--}}
+
                     <tbody>
 {{--                    @foreach($data as $value)--}}
 {{--                        {{$value}}->jobCategory--}}
@@ -47,12 +34,16 @@
                             <td>{{++$da}}</td>
                             <td>{{$data->fullName}}</td>
                             <td>{{$data->lookingFor}}</td>
-                            <td>{{$data->current}}</td>
-                            <td>{{$Age[$da]}}</td>
-                            <td>{{$data->jobTitle}}</td>
+                            <td>{{$data->dateOfBirth}}
+                                <br><br>{{$Age[$da]}}</td>
                             <td> {{$data->expectedSalary}}</td>
                             <td></td>
+{{--                            <td>{{$data->jobTitle}}</td>--}}
+
+                            <td><a class="btn btn-outline-dark" href="{{url("/test1/".$data->cv_id)}}"> Details</a></td>
+
                         </tr>
+
                     @endforeach
 
                     </tbody>

@@ -105,7 +105,7 @@
                                 {
                                     // label: 'Range',
                                     label:<?php echo json_encode($AgeArray); ?> ,
-                                    backgroundColor: ['#007bff', '#dc3545','#25DC93','#1FDC66','#6A933E','#DCD673','#DCD804'],
+                                    backgroundColor: ['#1C9CDB', '#42f5f2','#384747','#6d6b7d','#3c31b0','#871433','#2f8ca3'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($AgeData); ?>
                                 }
@@ -196,9 +196,10 @@
                                 {
                                     label: 'Total Candidate',
 
-                                    backgroundColor: ['#007bff', '#dc3545','#20fc03','#465259','#9e6816','#4e6e49','#0a2606','#0a2606','#20fc03'],
+                                    backgroundColor: ['#1C9CDB', '#dc3545','#36464a','#598f75','#571313','#34f7f4','#0a2606','#dfe2eb','#231f20','#1C9CD8',
+                                        '#2E8F83','',''],
                                     borderWidth: 3  ,
-                                    data: <?php echo json_encode($jobCatCount); ?>
+                                    data:<?php echo json_encode($jobCatCount); ?>
 
 
                                 }
@@ -280,7 +281,7 @@
                             datasets: [
                                 {
                                     label: 'Total',
-                                    backgroundColor: ['#007bff', '#dc3545'],
+                                    backgroundColor: ['#1C9CDB', '#dc3545','#1C9CDB'],
                                     borderWidth: 1,
                                     data: <?php echo json_encode($GenderCount); ?>
                                 }],
