@@ -253,7 +253,7 @@ class frontendController extends Controller
     {
         $datas['item'] = DB::table('personal_details')
             ->join('personal_profiles', 'personal_profiles.cv_id', '=', 'personal_details.id')
-            ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email', 'personal_profiles.lookingFor',
+            ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email','personal_details.mobileNo', 'personal_profiles.lookingFor',
                 'personal_profiles.expectedSalary', 'personal_details.gender','personal_profiles.cv_id')
             ->get();
 

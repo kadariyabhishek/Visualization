@@ -15,6 +15,8 @@
                     <tr>
                         <th>S.N</th>
                         <th>Name</th>
+                        <th>Mobile No</th>
+                        <th>Email</th>
                         <th>Job Category</th>
                         <th>Age</th>
                         <th>Expected Salary</th>
@@ -33,14 +35,15 @@
                         <tr>
                             <td>{{++$da}}</td>
                             <td>{{$data->fullName}}</td>
+                            <td>{{$data->mobileNo}}</td>
+                            <td>{{$data->email}}</td>
                             <td>{{$data->lookingFor}}</td>
-                            <td>{{$data->dateOfBirth}}
-                                <br><br>{{$Age[$da]}}</td>
+                            <td>{{$Age[$da]}}</td>
                             <td> {{$data->expectedSalary}}</td>
                             <td></td>
 {{--                            <td>{{$data->jobTitle}}</td>--}}
 
-                            <td><a class="btn btn-outline-dark" href="{{url("/test1/".$data->cv_id)}}"> Details</a></td>
+                            <td><a class="btn btn-primary" href="{{url("/test1/".$data->cv_id)}}"> Details</a></td>
 
                         </tr>
 
