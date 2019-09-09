@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 
+
+
+use App\DownloadNumber;
+use App\model\AcademicQualification;
 use App\model\Experience;
-use App\Model\AcademicQualification;
 use App\Model\PersonalDetail;
 use App\model\PersonalProfile;
 use App\Model\Reference;
@@ -115,11 +118,20 @@ class frontendController extends Controller
         $jobLevel=array('Senior Level','Mid Level','Entry level');
 
 
+        //to count the downloads no
+
+//        $downloads=DownloadNumber::where('cv_id')->count();
+        $downloads=DB::table('download_numbers')->count();
+
+        //to count the interested people for job
+
+        $jobSearchCount= DB::table('personal_profiles')->whereIn('interestedInJob',['Yes'])->count();
+
 
 
         return view('pages.dashboard', ['Gender' => $gender, 'GenderCount' => $genderCount  , 'Age' => $temp, 'IndustryCount' => $count,
             'jobCat' => $jobCatData, 'jobCatCount' => $jobCatCount,'percentage'=>$percentageArray,'AgeArray'=>$ageCountArray,'AgeData'=>$ageCountData,'MaxCount'=>$maxNo,
-            'InterestedCandidateCount'=>$interestedCandidateCount,'LookingFor'=>$LookingFor,'JobLevelCount'=>$jobLevelCount,'JobLevel'=>$jobLevel]);
+            'InterestedCandidateCount'=>$interestedCandidateCount,'LookingFor'=>$LookingFor,'JobLevelCount'=>$jobLevelCount,'JobLevel'=>$jobLevel,'Downloads'=>$downloads,'JobSearchCount'=>$jobSearchCount]);
 //        return view('pages.dashboard')->with('Months'=>$month, 'Data'=>$all);
     }
 
@@ -254,7 +266,7 @@ class frontendController extends Controller
         $datas['item'] = DB::table('personal_details')
             ->join('personal_profiles', 'personal_profiles.cv_id', '=', 'personal_details.id')
             ->select('personal_details.fullName', 'personal_details.dateOfBirth', 'personal_details.email','personal_details.mobileNo', 'personal_profiles.lookingFor',
-                'personal_profiles.expectedSalary', 'personal_details.gender','personal_profiles.cv_id')
+                'personal_profiles.expectedSalary', 'personal_details.gender','personal_profiles.cv_id','personal_profiles.preferredLocation')
             ->get();
 
 
@@ -300,7 +312,7 @@ class frontendController extends Controller
 
     }
 
-    public function getExperience($cv_id1){
+//    public function getExperience($cv_id){
 //        $dt = Carbon::now();
 ////        $end = array(DB::table('experiences')->pluck('endTime')->whereIn('endTime','!=','Current'));
 //        $start=Experience::all();
@@ -312,45 +324,35 @@ class frontendController extends Controller
 //        $getExp= Experience::where('cv_id',$cv_id1)
 //        ->get();
 //        return view('tables')->with('getExp',$getExp);
+////
 //
-
-    }
-
+//    }
 
 
+//function to get the experience table
     public function getTitle($id)
     {
         $track_id= $id;
-//        return $track_id;
-        //Create an array
-        $groups = [];
+        $item['item']=Experience::where('cv_id',$track_id)->get();//gets the array of data
+        $item['name']=PersonalDetail::where('id',$track_id)->first();//only gets the first data
 
-        $item=Experience::where('cv_id',$track_id)->get();
+        return view('test',$item);
 
-
-//        //Retrieve the list of experiences_cv_id's in use.
-//        $cats = DB::table('experiences')->distinct()->select('cv_id')->get();
-//
-//        //for each cat_id in use, find the products associated and then add a collection of those products to the relevant array element
-//        foreach($cats as $cat){
-//             $groups[$cat->cv_id] = DB::table('experiences')->where('cv_id', $cat->cv_id)->get();
-//        }
-////        dd($groups);
-
-        return view('test',['item'=>$item]);
-//        return view('test',$groups);
-
-//
-//        $myId= Experience::all();
-//        foreach($myId as $value){
-//            $ID[]=$value->cv_id;
-////            if($ID)
-//
-//        };
 
 //        return view('test',$questions);
 
     }
+    //function to get the education details
+    public function getEducation($id){
+
+        $track_id=$id;
+//        $item['item']=AcademicQualification::where('cv_id',$track_id)->get();
+    $item['item']=AcademicQualification::where('cv_id',$track_id)->get();
+        $item['name']=PersonalDetail::where('id',$track_id)->first();//only gets the first data
+
+        return view('pages.education',$item);
+    }
+
 
 
 }

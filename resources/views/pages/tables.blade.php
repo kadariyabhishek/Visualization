@@ -1,12 +1,13 @@
 @extends('master')
-
+@section('dashboard-header')
+    @endsection
 @section('content')
 
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Data Table Example
+            Personal Information
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -20,9 +21,9 @@
                         <th>Job Category</th>
                         <th>Age</th>
                         <th>Expected Salary</th>
-                        <th>Location</th>
-{{--                        <th>Current Office</th>--}}
+                        <th>Preferred Location</th>
                         <th>Experience</th>
+                        <th>Education</th>
                     </tr>
                     </thead>
 
@@ -40,10 +41,11 @@
                             <td>{{$data->lookingFor}}</td>
                             <td>{{$Age[$da]}}</td>
                             <td> {{$data->expectedSalary}}</td>
-                            <td></td>
+                            <td>{{$data->preferredLocation}}</td>
 {{--                            <td>{{$data->jobTitle}}</td>--}}
 
                             <td><a class="btn btn-primary" href="{{url("/test1/".$data->cv_id)}}"> Details</a></td>
+                            <td> <a class="btn btn-primary" href="{{url("/education/".$data->cv_id)}}"> Details</a></td>
 
                         </tr>
 

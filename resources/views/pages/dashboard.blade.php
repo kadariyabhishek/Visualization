@@ -1,4 +1,8 @@
 @extends('master')
+@section('dashboard-header')
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap" rel="stylesheet">
+    @endsection
 
 @section('content')
 
@@ -16,49 +20,48 @@
             <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
                     <div class="card-body-icon">
-                        <i class="fas fa-fw fa-comments"></i>
+{{--                        <i class="fas fa-fw fa-comments"></i>--}}
+                        <i class="far fa-file-alt"></i>
                     </div>
-                    <div class="mr-5">New CV</div>
+                    <div class="mr-5" style="font-family: 'Black Ops One', cursive;">New CV</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Details</span>
-                    <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-                </a>
+                <div class="card-footer text-white clearfix small z-1" href="#">
+{{--                    <span class="float-left">New CV</span>--}}
+                    <h2 style="text-align: center;font-family: 'Black Ops One', cursive;" >{{$Downloads}}</h2>
+
+                </div>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
                     <div class="card-body-icon">
-                        <i class="fas fa-fw fa-list"></i>
+                        <i class="fas fa-download"></i>
                     </div>
-                    <div class="mr-5">No of downloads </div>
+{{--                    <div class="mr-5"><h4>{{$Downloads}}</h4> </div>--}}
+                    <div class="mr-5" style="font-family: 'Black Ops One', cursive;">CV Downloads </div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Details</span>
-                    <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-                 asdf
-                </a>
+                <div class="card-footer text-white clearfix small z-1" href="#">
+{{--                    <span class="float-left">Downloads</span>--}}
+                    <h2 style="text-align: center; font-family: 'Black Ops One', cursive;">{{$Downloads}}</h2>
+
+                </div>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-3">
             <div class="card text-white bg-success o-hidden h-100">
                 <div class="card-body">
+{{--                <div class="dashboard-widget-content">--}}
                     <div class="card-body-icon">
-                        <i class="fas fa-fw fa-shopping-cart"></i>
+                        <i class="fas fa-search"></i>
                     </div>
-                    <div class="mr-5">Looking for job</div>
+                    <div class="mr-5" style="font-family: 'Black Ops One', cursive;">Looking for job</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Details</span>
-                    <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-                </a>
+                <div class="card-footer text-white clearfix small z-1" href="#">
+{{--                    <span class="float-md-none">{{$JobSearchCount}}</span>--}}
+                    <h2 style="text-align: center;font-family: 'Black Ops One', cursive;">{{$JobSearchCount}}</h2>
+
+                </div>
             </div>
         </div>
         <div class="col-xl-3 col-sm-6 mb-3">
@@ -67,14 +70,13 @@
                     <div class="card-body-icon">
                         <i class="fas fa-fw fa-life-ring"></i>
                     </div>
-                    <div class="mr-5">13 New Tickets!</div>
+                    <div class="mr-5" style="font-family: 'Black Ops One', cursive;">13 New Tickets!</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
-                    <span class="float-left">View Details</span>
-                    <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-                </a>
+                <div class="card-footer text-white clearfix small z-1" href="#">
+{{--                    <span class="float-left">View Details</span>--}}
+                    <h2 style="text-align: center; font-family: 'Black Ops One', cursive;">View Details</h2>
+
+                </div>
             </div>
         </div>
     </div>

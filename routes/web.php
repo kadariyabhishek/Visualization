@@ -40,8 +40,10 @@ Route::get('/test','frontendController@getAge');
 
 Route::get('/experience','frontendController@getExperience');
 
-
+//route to give path for the experience table
 Route::get('/test1/{id}','frontendController@getTitle')->name('test');
+//route for the education table
+Route::get('/education/{id}','frontendController@getEducation')->name('education');
 
 
 //for chart.blade.php
